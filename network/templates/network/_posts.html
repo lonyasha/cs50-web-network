@@ -1,0 +1,71 @@
+{# templates/network/_post.html #}
+{% for post in page_obj %}
+  <div class="card mb-3">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <div>
+        <strong>
+          <a href="{% url 'profile' post.user.username %}" class="username-link">
+            {{ post.user.username }}
+          </a>
+        </strong>
+        {{ post.timestamp }}
+      </div>
+      <div>
+        {% if user == post.user %}
+          <button class="btn btn-sm btn-outline-dark" onclick="editPost({{ post.id }})">Edit</button>
+        {% endif %}
+      </div>
+    </div>
+    
+    <div class="card-body">
+      <!-- Post Content -->
+      <div id="post-content-{{ post.id }}">
+        <p>{{ post.content }}</p>
+      </div>
+
+      <!-- Edit Form (Hidden by default) -->
+      <div id="edit-post-{{ post.id }}" style="display: none;">
+        <textarea id="edit-content-{{ post.id }}" class="form-control">{{ post.content }}</textarea>
+        <div class="edit-post d-flex justify-content-center">
+          <button class="btn btn-outline-success btn-sm mt-2" onclick="savePost({{ post.id }})">Save</button>
+          <button class="btn btn-outline-secondary btn-sm mt-2" onclick="cancelEdit({{ post.id }})">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Like Button and Count -->
+      <div class="d-flex justify-content-end align-items-center">
+        {% if user.is_authenticated %}
+          {% if user != post.user %}
+              <button 
+              id="like-btn-{{ post.id }}" 
+              class="btn btn-light heart-btn" 
+              onclick="toggleLike({{ post.id }})"
+              aria-label="Like/Unlike">
+              <i id="heart-icon-{{ post.id }}" class="{% if user in post.likes.all %}fas fa-heart liked{% else %}far fa-heart{% endif %}"></i>
+              </button>
+          {% else %}
+              <i class="fas fa-heart"></i> <!-- author -->
+          {% endif %}
+        {% else %}
+          <i class="fas fa-heart"></i> <!-- Non-authenticated users -->
+        {% endif %}
+      <span id="likes-{{ post.id }}" class="like-count ml-2">{{ post.like_count }}</span>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>No posts to display.</p>
+  {% endfor %}
+
+  <!-- Pagination controls -->
+  <div class="pagination justify-content-center align-items-center">
+    {% if page_obj.has_previous %}
+    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span class="page-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+    {% endif %}
+  </div>

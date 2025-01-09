@@ -1,0 +1,9 @@
+{% extends "network/layout.html" %} {% block body %}
+{% if user.is_authenticated%}
+
+  <h2 class="mb-4">Following</h2>
+
+  {% include "network/_posts.html" with posts=posts %}
+
+{% endif %}
+{% endblock %}
