@@ -36,7 +36,7 @@ To run this project locally, follow these steps:
    git clone https://github.com/lonyasha/cs50w-network.git
 2. **Navigate into the project directory**:
    ```bash
-   cd network
+   cd cs50w-network
 3. **Create a virtual environment**:
       ```bash
       python3 -m venv venv
