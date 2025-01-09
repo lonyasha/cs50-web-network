@@ -47,16 +47,13 @@ To run this project locally, follow these steps:
    - For **MacOS/Linux**:
      ```bash
      source venv/bin/activate
-5. **Install the required dependencies**:
-   ```bash
-   pip install -r requirements.txt
-6. **Run the migrations to set up the database**:
+5. **Run the migrations to set up the database**:
    ```bash
    python manage.py migrate
-7. **Create a superuser to access the admin panel (optional)**:
+6. **Create a superuser to access the admin panel (optional)**:
    ```bash
    python manage.py createsuperuser
-8. **Run the server**:
+7. **Run the server**:
    ```bash
    python manage.py runserver
 
